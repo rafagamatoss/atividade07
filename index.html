@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>atividade 7</title>
+</head>
+<body>
+  <h2>Calculadora de gorjetas</h2>
+  <label for="valorConta">Valor total da conta: (R$)</label>
+  <input type="number" name="valorTotal" id="valorConta"><br>
+
+  <label for="qualidade">Qualidade:  </label>
+  <select id="qualidade">
+    <option value="bom">Bom(20%)</option>
+    <option value="regular">Regular(10%)</option>
+    <option value="ruim">Ruim(5%)</option>
+  </select><br>
+
+  <button onclick="calcularGorgeta()">Calcular a gorjeta</button>
+  <h3 id="resultado"></h3>
+
+  <script>
+    const calcularPercentual = (valor, percentual) => valor * percentual
+
+    const processarGorjeta = (valorConta, qualidade, callback) => {
+      let percentual
+      switch (qualidade) {
+        case 'bom':
+          percentual = 0.20
+          break
+        case 'regular':
+          percentual = 0.10
+          break
+        case 'ruim':
+          percentual = 0.05
+          break
+        default:
+          percentual = 0
+      }
+      return callback(valorConta, percentual)
+    }
+
+    const calcularGorgeta = () => {
+      const valorConta = parseFloat(document.getElementById('valorConta').value)
+      const qualidade = document.getElementById('qualidade').value
+
+      if(isNaN(valorConta) || valorConta <= 0){
+        document.getElementById('resultado').textContent = 'Digite um valor válido'
+        return
+      }
+
+      const gorjeta = processarGorjeta(valorConta, qualidade, calcularPercentual)
+      const valorFinal = valorConta + gorjeta
+
+      document.getElementById('resultado').textContent = `Gorgeta: R$ ${gorjeta} | Valor total: ${valorFinal}`
+    }
+  </script>
+</body>
+</html>
